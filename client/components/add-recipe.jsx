@@ -173,9 +173,11 @@ class AddRecipe extends React.Component {
       method: 'POST',
       body: data
     })
-      .then(res => {
+      .then(response => {
+        console.log(response)
         return res.json();
-      });
+      })
+      .catch(err=>console.error(err));
   }
 
   render() {
