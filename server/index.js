@@ -38,7 +38,7 @@ app.post('/api/recipe-photos', (req, res, next) => {
     if (err) {
       next(new ClientError('error', 400));
     } else {
-      console.log(req.file.filename);
+      res.send(req.file.filename);
     }
   });
 });

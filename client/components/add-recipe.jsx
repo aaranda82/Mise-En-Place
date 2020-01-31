@@ -174,9 +174,9 @@ class AddRecipe extends React.Component {
       body: data
     })
       .then(response => {
-        console.log(response);
-        return res.json();
+        return response.json();
       })
+      .then(data => console.log(data))
       .catch(err => console.error(err));
   }
 
