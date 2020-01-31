@@ -59,6 +59,8 @@ export default class ShoppingList extends React.Component {
   }
 
   render() {
+    console.log(this.state.shoppingList);
+
     const data = this.getDisplay(this.state.shoppingList);
     const display = data.map((element, index) => (<Item key={index} remove={this.removeItem}ingredient={element}/>));
     return (
