@@ -20,7 +20,7 @@ A web application for people who enjoy cooking and want to create and share pers
 
 ## Live Demo
 
-[Checkout the site here:](https://miseenplace.alex-aranda.com/)
+[Checkout the site here](https://miseenplace.alex-aranda.com/)
 
 ## Features
   * User can sign up and log in
