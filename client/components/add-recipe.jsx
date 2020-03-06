@@ -255,7 +255,6 @@ class AddRecipe extends React.Component {
               <div className="text-center py-2 ">
                 <button className="addIngredientButton glow-on-hover">Add Ingredient</button>
               </div>
-
             </form>
           </div>
           <form className="addInstruction" onSubmit={this.handleAddInstruction}>
