@@ -27,13 +27,13 @@ class PublicPage extends React.Component {
       <React.Fragment>
         <div className="container-fluid w-100 p-0 fadeIn">
           <div className="row w-100">
-            <TopBar title={'Featured'} mealPlanIcon={true} addRecipeIcon={true}/>
+            <TopBar title={'Featured'} mealPlanIcon={true} addRecipeIcon={true} />
           </div>
-          <div className="row longFadeIn text-center featured">
-            <RecipeList recipes={this.state.recipes}/>
+          <div className="row  text-center featured fadeIn">
+            <RecipeList recipes={this.state.recipes} />
           </div>
           <div className="row">
-            <NavBar/>
+            <NavBar />
           </div>
 
         </div>

@@ -82,7 +82,7 @@ export default class SignUp extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid align-items-center d-flex login-background flex-column fadeIn">
+      <div className="container-fluid align-items-center d-flex login-background flex-column">
         <div className="row justify-content-center  mt-5 mb-2">
           <img src="/images/new-logo.png" height="150" width="200" alt="loading" />
         </div>
@@ -158,13 +158,13 @@ export default class SignUp extends React.Component {
                 <button
                   type="submit"
                   className="glow-on-hover  rounded ">
-                    Create Account
+                  Create Account
                 </button>
                 <Link to="/login">
                   <button
                     type="button"
                     className="btn my-2 signup-button rounded ">
-                  Back to Login Page
+                    Back to Login Page
                   </button>
                 </Link>
               </div>

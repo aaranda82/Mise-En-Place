@@ -25,9 +25,11 @@ app.get('/api/health-check', (req, res, next) => {
 
 /* photo upload */
 const storage = multer.diskStorage({
-  destination: './server/public/images',
+  destination: (req, file, cb) => {
+    cb(null, './server/public/images');
+  },
   filename: (req, file, cb) => {
-    cb(null, path.basename(file.originalname, path.extname(file.originalname)) + path.extname(file.originalname));
+    cb(null, path.basename(file.originalname, path.extname(file.originalname)) + '-' + Date.now() + path.extname(file.originalname));
   }
 });
 
@@ -57,20 +59,27 @@ app.post('/api/users', (req, res, next) => {
 
   db.query(sql, values)
     .then(result => {
-      const hash = result.rows[0].password;
+      if (!result.rows.length) {
+        return (
+          next(new ClientError('User name does not exist', 404))
+        );
+      } else {
+        const hash = result.rows[0].password;
+        return bcrypt.compare(password, hash)
+          .then(matches => {
+            if (matches === true) {
+              req.session.userId = result.rows[0].userId;
+              return res.status(200).json(result.rows[0].userId);
+            } else {
+              return (
+                next(new ClientError('Incorrect User Name or Password', 400))
+              );
+            }
+          });
+      }
+    })
+    .catch(error => console.error(error));
 
-      return bcrypt.compare(password, hash)
-        .then(matches => {
-          if (matches === true) {
-            req.session.userId = result.rows[0].userId;
-            return res.status(200).json(result.rows[0].userId);
-          } else {
-            return (
-              next(new ClientError('Incorrect User Name or Password', 400))
-            );
-          }
-        });
-    });
 });
 
 /*     POST USERS Sign Up  */
@@ -214,30 +223,30 @@ app.post('/api/mealplan', (req, res, next) => {
         if (!response.rows.length) {
           throw new ClientError('Cannot add to meal plan with a non-existing recipe', 400);
         } else {
+          // const sql = `
+          // select "recipeId"
+          // from "MealPlan"
+          // where "userId" = $1 and "recipeId" = $2`;
+          // const params = [userId, recipeId];
+          // db.query(sql, params)
+          // .then(response => {
+          // if (response.rows.length) {
+          // throw new ClientError('Item already in your meal plan!', 400);
+          // } else {
           const sql = `
-          select "recipeId"
-          from "MealPlan"
-          where "userId" = $1 and "recipeId" = $2`;
-          const params = [userId, recipeId];
-          db.query(sql, params)
-            .then(response => {
-              if (response.rows.length) {
-                throw new ClientError('Item already in your meal plan!', 400);
-              } else {
-                const sql = `
                     insert into "MealPlan"("userId", "recipeId")
                     values($1,$2)
                     returning *`;
-                const params = [userId, recipeId];
-                db.query(sql, params)
-                  .then(response => {
-                    res.status(201).json(response.rows);
-                  })
-                  .catch(err => next(err));
-              }
+          const params = [userId, recipeId];
+          db.query(sql, params)
+            .then(response => {
+              res.status(201).json(response.rows);
             })
-            .catch(err => { next(err); });
+            .catch(err => next(err));
         }
+        // })
+        // .catch(err => { next(err); });
+        // }
       })
       .catch(err => { next(err); });
   }
@@ -276,18 +285,44 @@ app.delete('/api/mealplan/:recipeId', (req, res, next) => {
     return res.json({ error: 'User is not logged in' });
   } else {
     const { recipeId } = req.params;
+    const sql = `select "mealPlanId" 
+                    from "MealPlan"
+                   WHERE "userId" = $1
+                   AND "recipeId" = $2;
+       `;
     const values = [req.session.userId, recipeId];
-    const sql = `
-        DELETE FROM "MealPlan"
-                WHERE "userId" = $1
-                AND "recipeId" = $2
-                RETURNING *;
-    `;
     db.query(sql, values)
-      .then(result => {
-        res.status(204).json(result.rows);
-      })
-      .catch(err => { next(err); });
+      .then(response => {
+        if (response.rows.length > 1) {
+          const firstMealPlanId = response.rows[0].mealPlanId;
+          const values = [req.session.userId, recipeId, firstMealPlanId];
+          const sql = `
+          DELETE FROM "MealPlan"
+                  WHERE "userId" = $1
+                  AND "recipeId" = $2
+                  AND "mealPlanId" = $3
+                  RETURNING *;
+      `;
+          db.query(sql, values)
+            .then(result => {
+              res.status(204).json(result.rows);
+            })
+            .catch(err => { next(err); });
+        } else {
+          const values = [req.session.userId, recipeId];
+          const sql = `
+              DELETE FROM "MealPlan"
+                      WHERE "userId" = $1
+                      AND "recipeId" = $2
+                      RETURNING *;
+          `;
+          db.query(sql, values)
+            .then(result => {
+              res.status(204).json(result.rows);
+            })
+            .catch(err => { next(err); });
+        }
+      });
   }
 });
 

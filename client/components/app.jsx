@@ -63,19 +63,10 @@ export default class App extends React.Component {
       .then(res => res.ok ? res.json() : (
         Swal.fire('One or more inputs were invalid'),
         Promise.reject(new Error('Failed to Create User'))
-      ))
-      .then(data => {
-        console.log('data returned:', data);
-      });
-
-  }
-
-  componentDidMount() {
-
+      ));
   }
 
   render() {
-
     const context = {
       user: this.state.user,
       handleClick: this.handleClick,
@@ -86,17 +77,17 @@ export default class App extends React.Component {
       <AppContext.Provider value={context}>
         <Router >
           <Route exact path='/'>
-            <Redirect to='/login'/>
+            <Redirect to='/login' />
           </Route>
-          <Route exact path="/myRecipes" component={MyRecipes}/>
-          <Route exact path="/shoppingList" component={ShoppingList}/>
-          <Route exact path="/login" component={Login}/>
+          <Route exact path="/myRecipes" component={MyRecipes} />
+          <Route exact path="/shoppingList" component={ShoppingList} />
+          <Route exact path="/login" component={Login} />
           <Route exact path="/mealplan" component={MealPlan} />
-          <Route exact path="/sign-up" component={SignUp}/>
-          <Route exact path="/public-page" component={PublicPage}/>
-          <Route exact path="/account" component={Account}/>
-          <Route path="/recipe-detail-page/:recipeId" component={RecipeDetailPage}/>
-          <Route exact path="/add-recipe" component={AddRecipe}/>
+          <Route exact path="/sign-up" component={SignUp} />
+          <Route exact path="/public-page" component={PublicPage} />
+          <Route exact path="/account" component={Account} />
+          <Route path="/recipe-detail-page/:recipeId" component={RecipeDetailPage} />
+          <Route exact path="/add-recipe" component={AddRecipe} />
         </Router>
       </AppContext.Provider>
     );

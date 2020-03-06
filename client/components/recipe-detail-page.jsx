@@ -50,7 +50,7 @@ class RecipeDetailPage extends React.Component {
     const recipe = this.state.recipe;
     const image = recipe.image ? recipe.image : '/images/new-logo.png';
     return (
-      <div className="recipeContainer fadeIn">
+      <div className="recipeContainer">
         <TopBar mealPlanIcon={false} addRecipeIcon={false} title={this.state.recipe.recipeName} />
         <div className="recipeInfo  text-center">
           <div className="category pt-2">Category: {recipe.category}</div>
@@ -66,7 +66,7 @@ class RecipeDetailPage extends React.Component {
           <div className="text-center border-bottom border-dark m-0">Instructions</div>
           {this.generateInstructions()}
         </div>
-        <NavBar/>
+        <NavBar />
       </div>
     );
   }

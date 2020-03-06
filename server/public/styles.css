@@ -8,6 +8,10 @@ body{
   font-weight: bold;
 }
 
+input:focus, textarea:focus, select:focus, button:focus{
+  outline: none;
+}
+
 a{
   text-decoration: none;
   color: inherit;
@@ -73,9 +77,25 @@ a{
   bottom: -2px;
   right:0;
   height: 69px;
-  font-size: 2em;
+  /* font-size: 2em; */
   color: white;
   background-color: #5ab9ea ;
+}
+
+.navBarIconContainer{
+  text-align: center;
+  padding-top: 9px;
+}
+
+.navBarIcon{
+  font-size: 1.25em;
+  margin: auto;
+}
+
+.navBarLabel{
+  font-size: 0.5em;
+  text-align: center;
+  display: block;
 }
 
 .white{
@@ -87,9 +107,13 @@ a{
 }
 
 .picture{
-  height: 150px;
-  width: 30px;
-  object-fit: cover;
+  height: 135px;
+  object-fit: contain;
+}
+
+.pictureMealPlan{
+  height: 100px;
+  object-fit: contain;
 }
 
 .fa-utensils, .fa-times{
@@ -188,7 +212,7 @@ a{
 }
 
 .star{
-  top: 94px;
+  top: 20px;
   position: absolute;
   left: 20px;
   font-size: xx-large;
@@ -250,14 +274,26 @@ a{
 }
 
 .mealPlanIcon{
-  position: absolute;
   right: 16px;
   top: 6px;
+  height: 50px;
 }
-.addRecipeIcon{
+
+.topNavAddRecipe{
   position: absolute;
   left: 25px;
-  top: 22px;
+  text-align: center;
+}
+
+.topNavMealPlan{
+  position: absolute;
+  right: 25px;
+  text-align: center;
+}
+
+.addRecipeLabel{
+  font-size: x-small;
+display: block;
 }
 
 .newRecipeContainer{

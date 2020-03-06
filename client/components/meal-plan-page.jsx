@@ -46,19 +46,19 @@ export default class MealPlan extends React.Component {
 
   render() {
     const data = this.state.mealPlan;
-    const display = data.map(element =>
+    const display = data.map((element, index) =>
       (<MealPlanRecipe
-        key={element.recipeId}
+        key={index}
         recipe={element}
         delete={this.deleteMealPlan}
       />));
     return (
       <React.Fragment>
-        <TopBar mealPlanIcon={true} addRecipeIcon={true} title={'Meal Plan'}/>
-        <div className="recipes-container fadeIn">
+        <TopBar mealPlanIcon={true} addRecipeIcon={true} title={'Meal Plan'} />
+        <div className="recipes-container">
           {display}
         </div>
-        <NavBar/>
+        <NavBar />
       </React.Fragment>
     );
   }
@@ -73,16 +73,16 @@ function MealPlanRecipe(props) {
       <div className="card-body row">
         <div className="col-6">
           <Link to={`/recipe-detail-page/${props.recipe.recipeId}`}>
-            <h5 className="card-title text-primary">{props.recipe.recipeName}</h5>
+            <p className="card-title text-primary">{props.recipe.recipeName}</p>
           </Link>
           <div className="card-text">
             <div className="category-serving">
-              <p>Category: {props.recipe.category}</p>
-              <p>Serving: {props.recipe.numberOfServings}</p>
+              <h5>Category: {props.recipe.category}</h5>
+              <h5>Serving: {props.recipe.numberOfServings}</h5>
             </div>
           </div>
         </div>
-        <img className="picture col-6" src={image} />
+        <img className="pictureMealPlan col-6" src={image} />
       </div>
     </div >
 
