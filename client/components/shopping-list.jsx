@@ -62,6 +62,7 @@ export default class ShoppingList extends React.Component {
         newShoppingList.splice(i, 1);
       }
     }
+
     this.setState({ shoppingList: newShoppingList });
   }
 
