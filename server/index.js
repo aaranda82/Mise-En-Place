@@ -79,6 +79,7 @@ app.post('/api/users', (req, res, next) => {
       }
     })
     .catch(error => console.error(error));
+
 });
 
 /*     POST USERS Sign Up  */

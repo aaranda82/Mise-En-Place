@@ -100,7 +100,7 @@ function Item(props) {
   return (
     <div className="card mb-1">
       <div className="card-body">
-        <h5 className="card-title text-center">{<u>{capitalizeWords(tempName)}</u>}</h5>
+        <h5 className="card-title text-center"><u>{tempName}</u></h5>
         <div className="card-text  align-items-center row">
           <div className="col-3  justify-content-center d-flex">
             <input type="checkbox" className='checkbox' />

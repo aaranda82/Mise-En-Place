@@ -85,6 +85,7 @@ function FavRecipe(props) {
   return (
     <div className="card">
       <img className="delete-button" src="https://img.icons8.com/ios-filled/100/000000/delete-forever.png" onClick={() => { props.delete(props.recipe.recipeId); }} />
+
       <div className="card-body row">
         <div className="col-6">
           <Link to={`/recipe-detail-page/${props.recipe.recipeId}`}>

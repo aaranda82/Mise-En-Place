@@ -270,9 +270,11 @@ class AddRecipe extends React.Component {
 
           </form>
           <form onSubmit={this.handlePhotoSubmit}>
+
             <label className="w-100">
               Upload Image:
               <input required id="photoInput" className="fileInput" type="file" accept="image/png, image/jpeg, image/jpg" name="myImage" />
+
             </label>
             <br />
             <div className="mb-2 pb-2 text-center border-bottom border-dark">

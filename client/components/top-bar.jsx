@@ -27,6 +27,7 @@ export default class TopBar extends React.Component {
     return (
       <div className="title py-3 mb-3 justify-content-center d-flex row align-items-center">
         <Link to={'/add-recipe'} className='topNavAddRecipe'>
+
           {addRecipeIcon}
         </Link>
         <div>
