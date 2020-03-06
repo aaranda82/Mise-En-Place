@@ -34,7 +34,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single('photo');
 
 app.post('/api/recipe-photos', (req, res, next) => {
-  console.log('req.file:', req.file);
   upload(req, res, err => {
     if (err) {
       next(err);
@@ -58,22 +57,19 @@ app.post('/api/users', (req, res, next) => {
 
   db.query(sql, values)
     .then(result => {
-      if (!result.rows[0]) {
-        return next(new ClientError('Incorrect User Name or Password', 400));
-      } else {
-        const hash = result.rows[0].password;
+      const hash = result.rows[0].password;
 
-        return bcrypt.compare(password, hash)
-          .then(matches => {
-            if (matches === true) {
-              req.session.userId = result.rows[0].userId;
-              return res.status(200).json(result.rows[0].userId);
-            } else {
-              res.json({ error: 'Incorrect Username or Password' });
-              res.redirect('/login');
-            }
-          });
-      }
+      return bcrypt.compare(password, hash)
+        .then(matches => {
+          if (matches === true) {
+            req.session.userId = result.rows[0].userId;
+            return res.status(200).json(result.rows[0].userId);
+          } else {
+            return (
+              next(new ClientError('Incorrect User Name or Password', 400))
+            );
+          }
+        });
     });
 });
 
@@ -218,30 +214,30 @@ app.post('/api/mealplan', (req, res, next) => {
         if (!response.rows.length) {
           throw new ClientError('Cannot add to meal plan with a non-existing recipe', 400);
         } else {
+          // const sql = `
+          // select "recipeId"
+          // from "MealPlan"
+          // where "userId" = $1 and "recipeId" = $2`;
+          // const params = [userId, recipeId];
+          // db.query(sql, params)
+          // .then(response => {
+          // if (response.rows.length) {
+          // throw new ClientError('Item already in your meal plan!', 400);
+          // } else {
           const sql = `
-          select "recipeId"
-          from "MealPlan"
-          where "userId" = $1 and "recipeId" = $2`;
-          const params = [userId, recipeId];
-          db.query(sql, params)
-            .then(response => {
-              if (response.rows.length) {
-                throw new ClientError('Item already in your meal plan!', 400);
-              } else {
-                const sql = `
                     insert into "MealPlan"("userId", "recipeId")
                     values($1,$2)
                     returning *`;
-                const params = [userId, recipeId];
-                db.query(sql, params)
-                  .then(response => {
-                    res.status(201).json(response.rows);
-                  })
-                  .catch(err => next(err));
-              }
+          const params = [userId, recipeId];
+          db.query(sql, params)
+            .then(response => {
+              res.status(201).json(response.rows);
             })
-            .catch(err => { next(err); });
+            .catch(err => next(err));
         }
+        // })
+        // .catch(err => { next(err); });
+        // }
       })
       .catch(err => { next(err); });
   }
@@ -453,9 +449,8 @@ app.post('/api/recipe', (req, res, next) => {
     const userParams = [req.session.userId];
     db.query(findUserNameSql, userParams)
       .then(response => {
-        console.log(response.rows[0]);
         const createdBy = response.rows[0].userName;
-        const params = [recipe.recipeName, recipe.category, recipe.numberOfServings, createdBy, ''];
+        const params = [recipe.recipeName, recipe.category, recipe.numberOfServings, createdBy, recipe.image];
         const sql = `
       insert into "Recipes"("recipeName", "category", "numberOfServings", "createdBy", "image")
       values($1, $2, $3, $4, $5)

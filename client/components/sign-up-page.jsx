@@ -67,22 +67,22 @@ export default class SignUp extends React.Component {
     };
     const lowerCase = /[a-z]/g;
     const upperCase = /[A-Z]/g;
-    const numbers = /[0-9]/g
-    if(!user.password.match(lowerCase)){
-      return Swal.fire('Password must contain a lowercased letter')
-    } else if(!user.password.match(upperCase)){
-      return Swal.fire('Password must contain an uppercased letter')
-    } else if(!user.password.match(numbers)){
-      return Swal.fire('Password must contain a number')
+    const numbers = /[0-9]/g;
+    if (!user.password.match(lowerCase)) {
+      return Swal.fire('Password must contain a lowercased letter');
+    } else if (!user.password.match(upperCase)) {
+      return Swal.fire('Password must contain an uppercased letter');
+    } else if (!user.password.match(numbers)) {
+      return Swal.fire('Password must contain a number');
     } else {
       this.context.handleUserSignup(user)
-      .then(() => { this.props.history.push('/login'); });
+        .then(() => { this.props.history.push('/login'); });
     }
   }
 
   render() {
     return (
-      <div className="container-fluid align-items-center d-flex login-background flex-column fadeIn">
+      <div className="container-fluid align-items-center d-flex login-background flex-column">
         <div className="row justify-content-center  mt-5 mb-2">
           <img src="/images/new-logo.png" height="150" width="200" alt="loading" />
         </div>
@@ -158,13 +158,13 @@ export default class SignUp extends React.Component {
                 <button
                   type="submit"
                   className="glow-on-hover  rounded ">
-                    Create Account
+                  Create Account
                 </button>
                 <Link to="/login">
                   <button
                     type="button"
                     className="btn my-2 signup-button rounded ">
-                  Back to Login Page
+                    Back to Login Page
                   </button>
                 </Link>
               </div>

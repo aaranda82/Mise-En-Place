@@ -19,11 +19,7 @@ export default class MyRecipe extends React.Component {
   }
 
   getData() {
-    const init = {
-      method: 'GET'
-
-    };
-    fetch('api/fav', init)
+    fetch('api/fav')
       .then(response => response.json())
       .then(data => {
         this.setState(state => ({ favoriteRecipes: data }));
@@ -69,11 +65,11 @@ export default class MyRecipe extends React.Component {
 
   render() {
     const data = this.state.favoriteRecipes;
-    const display = data.map(element => (<FavRecipe key={element.recipeId} recipe={element} delete={this.deleteFavRecipes} addToMealPlan={this.addToMealPlan}/>));
+    const display = data.map(element => (<FavRecipe key={element.recipeId} recipe={element} delete={this.deleteFavRecipes} addToMealPlan={this.addToMealPlan} />));
     return (
       <React.Fragment>
-        <div className="container-fluid mb-4 pb-4 p-0 w-100 fadeIn">
-          <TopBar mealPlanIcon={true} addRecipeIcon={true} title={'My Recipes'}/>
+        <div className="container-fluid mb-4 pb-4 p-0 w-100">
+          <TopBar mealPlanIcon={true} addRecipeIcon={true} title={'My Recipes'} />
           <div className="recipes-container">
             {display}
           </div>
@@ -87,20 +83,20 @@ export default class MyRecipe extends React.Component {
 function FavRecipe(props) {
   const image = props.recipe.image ? props.recipe.image : '/images/new-logo.png';
   return (
-    <div className="card fadeIn">
-      <img className="delete-button" src="https://img.icons8.com/ios-filled/100/000000/delete-forever.png" onClick={() => { props.delete(props.recipe.recipeId); }}/>
+    <div className="card">
+      <img className="delete-button" src="https://img.icons8.com/ios-filled/100/000000/delete-forever.png" onClick={() => { props.delete(props.recipe.recipeId); }} />
       <div className="card-body row">
         <div className="col-6">
           <Link to={`/recipe-detail-page/${props.recipe.recipeId}`}>
-            <h5 className="card-title text-primary">{props.recipe.recipeName}</h5>
+            <p className="card-title text-primary">{props.recipe.recipeName}</p>
           </Link>
           <div className="card-text">
             <div className="category-serving">
-              <p>Category: {props.recipe.category}</p>
-              <p>Serving: {props.recipe.numberOfServings}</p>
+              <h5>Category: {props.recipe.category}</h5>
+              <h5>Serving: {props.recipe.numberOfServings}</h5>
             </div>
             <div className="button-container">
-              <img src="https://img.icons8.com/ios-filled/40/000000/meal.png" onClick={() => { props.addToMealPlan(props.recipe.recipeId); }}/>
+              <img src="https://img.icons8.com/ios-filled/40/000000/meal.png" onClick={() => { props.addToMealPlan(props.recipe.recipeId); }} />
             </div>
           </div>
         </div>

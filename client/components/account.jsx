@@ -32,21 +32,13 @@ export default class Account extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <TopBar title={'Account Details'} displayIcon={true}/>
-        <div className="
-                container
-                fadeIn
-                p-0
-                mt-5
-                pt-4
-                flex-column
-                align-items-center
-        ">
+        <TopBar title={'Account Details'} displayIcon={true} />
+        <div className="container p-0 mt-5 pt-4 flex-column align-items-center">
           <div className="row mt-4">
             <div className="col-12  flex-column text-center">
               <h2 className="border-bottom mb-4">Account Information</h2>
               {this.state.user.image
-                ? <img className="mt-2  mb-4 account-icon" src={this.state.user.image} alt=""/>
+                ? <img className="mt-2  mb-4 account-icon" src={this.state.user.image} alt="" />
                 : <img className="mt-2  mb-4 account-icon" src={'/images/sadPatrick.gif'} alt="" />}
             </div>
           </div>

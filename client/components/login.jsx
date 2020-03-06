@@ -43,9 +43,9 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid login-background fadeIn  p-0 d-flex align-items-center  flex-column ">
+      <div className="container-fluid login-background p-0 d-flex align-items-center flex-column ">
         <div className="row justify-content-center login-title  w-100 my-5">
-          <img src="/images/new-logo.png" className = "" height="150" width="200" alt="loading"/>
+          <img src="/images/new-logo.png" className="" height="150" width="200" alt="loading" />
         </div>
         <div className="row card intro-card flex-row justify-content-around text-light ">
           <h1 className=" text-center pink">Sign In</h1>
@@ -71,20 +71,20 @@ export default class Login extends React.Component {
                     className="form-control text-center input-rounding w-70"
                     required
                     autoFocus
-                    onChange={this.handlePasswordChange}/>
+                    onChange={this.handlePasswordChange} />
                 </div>
               </div>
               <div className="input-group-append flex-column w-100 justify-content-center align-items-center">
                 <button
                   type="submit"
                   className=" glow-on-hover  rounded my-2">
-                    Log In
+                  Log In
                 </button>
                 <Link to="/sign-up">
                   <button
                     type="button"
                     className=" btn signup-button rounded my-2">
-                      Sign Up
+                    Sign Up
                   </button>
                 </Link>
               </div>
